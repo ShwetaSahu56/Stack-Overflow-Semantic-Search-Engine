@@ -9,7 +9,7 @@
 import pandas as pd
 import numpy as np
 import pickle
-from sklearn.metrics.pairwise import cosine_similarity
+import sklearn.metrics.pairwise as met
 import streamlit as st
 
 
@@ -64,7 +64,7 @@ def GetSimilarQuestions(query, no_sim_ques):
         query_tfidf_wtd_vec = query_tf_idf_vec/np.sum(query_tf_idf)
   
     #get cosine similiarity value of each question w.r.t. query string
-    cos_sim = pd.Series(cosine_similarity(query_tfidf_wtd_vec.reshape(1, -1), tfidf_wtd_ques_vec_embeddings)[0])
+    cos_sim = pd.Series(met.cosine_similarity(query_tfidf_wtd_vec.reshape(1, -1), tfidf_wtd_ques_vec_embeddings)[0])
     
     #get n-larget values i.e. k (no_sim_ques) most similar questions to query string
     sim_questions = cos_sim.nlargest(no_sim_ques).index
