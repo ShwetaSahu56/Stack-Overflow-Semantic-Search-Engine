@@ -20,7 +20,7 @@ def make_clickable(ques_id, title):
     link = "https://stackoverflow.com/questions/"+str(ques_id)
     return f'<a target="_blank" href="{link}">{text}</a>'
 
-@st.cache
+st.cache_data
 def get_model_files():
     #LSTM model based word-vector dictionary and Question Embeddings
     word_dict = pickle.load(open("Best_LSTM_Model_Vocab_Vector_dict.pkl", "rb"))
