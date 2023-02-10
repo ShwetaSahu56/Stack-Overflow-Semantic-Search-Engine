@@ -13,6 +13,13 @@ from sklearn.metrics.pairwise import cosine_similarity
 import re
 import streamlit as st
 
+def make_clickable(ques_id, title):
+    # target _blank to open new window
+    # extract clickable text to display for your link
+    text = title
+    link = "https://stackoverflow.com/questions/"+ques_id
+    return f'<a target="_blank" href="{link}">{text}</a>'
+
 def GetSimilarQuestions(query, no_sim_ques):
     ''' This function finds k-most similar questions to the searched query based on their cosine similarity values'''
     
@@ -51,7 +58,8 @@ def GetSimilarQuestions(query, no_sim_ques):
     #get n-larget values i.e. k (no_sim_ques) most similar questions to query string
     sim_questions = cos_sim.nlargest(no_sim_ques).index
     sim_ques_id_title =  lstm_embedded_questions.iloc[sim_questions][['Id', 'Title']]
-    return sim_ques_id_title
+    df = sim_ques_id_title.apply(make_clickable, (sim_ques_id_title.Id, sim_ques_id_title.Title))
+    return df
 
 
 st.title('Stack Overflow Search Engine')
@@ -59,9 +67,20 @@ st.markdown('Currenty working for limited Questions related to Javascript, java 
 st.header('Enter your query')
 query = st.text_input('Search Query')
 #st.button('Search', key='srchBtn')
+# pandas display options
+pd.set_option('display.max_colwidth', -1)
+
+def add_stream_url(ques_ids):
+	return [f'https://stackoverflow.com/questions/{q}' for q in ques_ids]
+
+def make_clickable(url, text):
+    return f'<a target="_blank" href="{url}">{text}</a>'
+
+# show data
 if st.button('Search'):
     result = GetSimilarQuestions(query, 10)
-    st.dataframe(result)
+	st.write(result.to_html(escape = False), unsafe_allow_html = True)
+    #st.dataframe(result)
 
 
 
