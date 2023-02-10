@@ -41,12 +41,12 @@ def GetSimilarQuestions(query, no_sim_ques):
     print(query)
     
     #LSTM model based word-vector dictionary and Question Embeddings
-    word_dict = pickle.load(open("ReqdFiles/Best_LSTM_Model_Vocab_Vector_dict.pkl", "rb"))
-    lstm_embedded_questions = pd.read_pickle("ReqdFiles/Questions_lstm_embeddings_dataset.pkl")
+    word_dict = pickle.load(open("Best_LSTM_Model_Vocab_Vector_dict.pkl", "rb"))
+    lstm_embedded_questions = pd.read_pickle("Questions_lstm_embeddings_dataset.pkl")
     tfidf_wtd_ques_vec_embeddings = np.array(lstm_embedded_questions['tfidf_wtd_lstm_embed_questions'].tolist())
     
     #get tf-idf vectorizer model
-    questions_tfidf = pickle.load(open("ReqdFiles/tfidf_model_ques.pickle", "rb"))
+    questions_tfidf = pickle.load(open("tfidf_model_ques.pickle", "rb"))
 
     # we are converting a dictionary with word as a key, and the idf as a value
     idf_dict = dict(zip(questions_tfidf.get_feature_names_out(), list(questions_tfidf.idf_)))
