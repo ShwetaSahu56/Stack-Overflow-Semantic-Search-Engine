@@ -12,25 +12,6 @@ import pickle
 import sklearn
 import streamlit as st
 
-
-# In[ ]:
-
-
-st.title('Stack Overflow Search Engine')
-st.markdown('Currenty working for limited Questions related to Javascript, java and c# only')
-st.header('Enter your query')
-query = st.text_input('Search Query')
-st.button('Search', key='srchBtn')
-if st.button('Say hello'):
-    result = GetSimilarQuestions(query, 10)
-    st.dataframe(result)
-
-
-# **Function to get k-most similar questions to the query string based on cosine similarity**
-
-# In[5]:
-
-
 def GetSimilarQuestions(query, no_sim_ques):
     ''' This function finds k-most similar questions to the searched query based on their cosine similarity values'''
     
@@ -72,7 +53,14 @@ def GetSimilarQuestions(query, no_sim_ques):
     return sim_ques_id_title
 
 
-# In[ ]:
+st.title('Stack Overflow Search Engine')
+st.markdown('Currenty working for limited Questions related to Javascript, java and c# only')
+st.header('Enter your query')
+query = st.text_input('Search Query')
+#st.button('Search', key='srchBtn')
+if st.button('Search'):
+    result = GetSimilarQuestions(query, 10)
+    st.dataframe(result)
 
 
 
