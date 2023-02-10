@@ -70,16 +70,11 @@ query = st.text_input('Search Query')
 # pandas display options
 pd.set_option('display.max_colwidth', -1)
 
-def add_stream_url(ques_ids):
-	return [f'https://stackoverflow.com/questions/{q}' for q in ques_ids]
-
-def make_clickable(url, text):
-    return f'<a target="_blank" href="{url}">{text}</a>'
 
 # show data
 if st.button('Search'):
     result = GetSimilarQuestions(query, 10)
-	st.write(result.to_html(escape = False), unsafe_allow_html = True)
+    st.write(result.to_html(escape = False), unsafe_allow_html = True)
     #st.dataframe(result)
 
 
