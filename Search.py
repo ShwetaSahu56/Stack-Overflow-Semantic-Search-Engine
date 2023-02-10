@@ -44,17 +44,18 @@ def GetSimilarQuestions(query, no_sim_ques):
     #word_dict, lstm_embedded_questions, tfidf_wtd_ques_vec_embeddings, idf_dict, tfidf_vocab = get_model_files()
     
     #convert query words to vectors if word is present in both model vocabulary and tf-idf vectorizer vocabulary 
-    query_vector = np.array([word_dict[w] for w in query.split() if w in word_dict and w in tfidf_vocab])
+    query_vector = np.array([word_dict[w] for w in query.split() if w in word_dict])
     
     #get tf-idf valuesfor each query words if word is present in both model vocabulary and tf-idf vectorizer vocabulary
     query_tf_idf = np.array([(idf_dict[w]*(query.count(w)/len(query.split()))) for w in query.split() if w in word_dict and w in tfidf_vocab ])
     
-    #get tf-idf weighted vector embedding for query string
-    query_tf_idf_vec = np.sum(query_vector*query_tf_idf[:,None], axis=0)
     if(np.sum(query_tf_idf)!=0):
+        #get tf-idf weighted vector embedding for query string
+        query_tf_idf_vec = np.sum(query_vector*query_tf_idf[:,None], axis=0)
         query_tfidf_wtd_vec = query_tf_idf_vec/np.sum(query_tf_idf)
     else:
-        query_tfidf_wtd_vec = query_tf_idf_vec
+        if(query_vector.shape[0]!=0):
+            query_tfidf_wtd_vec = np.sum(query_vector)/query_vector.shape[0]
   
     #get cosine similiarity value of each question w.r.t. query string
     cos_sim = pd.Series(cosine_similarity(query_tfidf_wtd_vec.reshape(1, -1), tfidf_wtd_ques_vec_embeddings)[0])
