@@ -26,8 +26,7 @@ def GetSimilarQuestions(query, no_sim_ques):
     #decontractions
     query = query.replace("won't", "will not").replace("can\'t", "can not").replace("n\'t", " not").replace("\'re", " are").replace("\'s", " is").replace("\'d", " would").replace("\'ll", " will").replace("\'t", " not").replace("\'ve", " have").replace("\'m", " am")
 
-    query=re.sub(r'[^A-Za-z0-9#+\-]+',' ',query)
-    print(query)
+    query=re.sub(r'[^A-Za-z0-9#+]+',' ',query)
     
     #LSTM model based word-vector dictionary and Question Embeddings
     word_dict = pickle.load(open("Best_LSTM_Model_Vocab_Vector_dict.pkl", "rb"))
