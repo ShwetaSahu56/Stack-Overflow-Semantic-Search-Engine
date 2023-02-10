@@ -17,7 +17,7 @@ def make_clickable(ques_id, title):
     # target _blank to open new window
     # extract clickable text to display for your link
     text = title
-    link = "https://stackoverflow.com/questions/"+ques_id
+    link = "https://stackoverflow.com/questions/"+str(ques_id)
     return f'<a target="_blank" href="{link}">{text}</a>'
 
 def GetSimilarQuestions(query, no_sim_ques):
@@ -58,7 +58,8 @@ def GetSimilarQuestions(query, no_sim_ques):
     #get n-larget values i.e. k (no_sim_ques) most similar questions to query string
     sim_questions = cos_sim.nlargest(no_sim_ques).index
     sim_ques_id_title =  lstm_embedded_questions.iloc[sim_questions][['Id', 'Title']]
-    df = sim_ques_id_title.apply(make_clickable, (sim_ques_id_title.Id, sim_ques_id_title.Title))
+    sim_ques_id_title['link'] = sim_ques_id_title.apply(lambda x: make_clickable(x['Id'], x['Title']), axis=1)
+    df = sim_ques_id_title[['link']]
     return df
 
 
