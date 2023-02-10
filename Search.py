@@ -58,8 +58,8 @@ def GetSimilarQuestions(query, no_sim_ques):
     #get n-larget values i.e. k (no_sim_ques) most similar questions to query string
     sim_questions = cos_sim.nlargest(no_sim_ques).index
     sim_ques_id_title =  lstm_embedded_questions.iloc[sim_questions][['Id', 'Title']]
-    sim_ques_id_title['link'] = sim_ques_id_title.apply(lambda x: make_clickable(x['Id'], x['Title']), axis=1)
-    df = sim_ques_id_title[['link']]
+    sim_ques_id_title['Similar Questions'] = sim_ques_id_title.apply(lambda x: make_clickable(x['Id'], x['Title']), axis=1)
+    df = sim_ques_id_title[['Similar Questions']]
     return df
 
 
@@ -75,7 +75,7 @@ pd.set_option('display.max_colwidth', -1)
 # show data
 if st.button('Search'):
     result = GetSimilarQuestions(query, 10)
-    st.write(result.to_html(escape = False), unsafe_allow_html = True)
+    st.write(result.to_html(index = False, escape = False, render_linksbool = True), unsafe_allow_html = True)
     #st.dataframe(result)
 
 
