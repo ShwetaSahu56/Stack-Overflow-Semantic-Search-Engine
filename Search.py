@@ -10,6 +10,7 @@ import pandas as pd
 import numpy as np
 import pickle
 import sklearn
+import re
 import streamlit as st
 
 def GetSimilarQuestions(query, no_sim_ques):
