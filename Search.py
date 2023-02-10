@@ -31,7 +31,7 @@ def get_model_files():
     # we are converting a dictionary with word as a key, and the idf as a value
     idf_dict = dict(zip(questions_tfidf.get_feature_names_out(), list(questions_tfidf.idf_)))
     tfidf_vocab = set(questions_tfidf.get_feature_names_out())
-    return word_dict, tfidf_wtd_ques_vec_embeddings, idf_dict, tfidf_vocab
+    return word_dict, lstm_embedded_questions, tfidf_wtd_ques_vec_embeddings, idf_dict, tfidf_vocab
 
 def GetSimilarQuestions(query, no_sim_ques):
     ''' This function finds k-most similar questions to the searched query based on their cosine similarity values'''
@@ -53,7 +53,7 @@ def GetSimilarQuestions(query, no_sim_ques):
     #idf_dict = dict(zip(questions_tfidf.get_feature_names_out(), list(questions_tfidf.idf_)))
     #tfidf_vocab = set(questions_tfidf.get_feature_names_out())
     
-    word_dict, tfidf_wtd_ques_vec_embeddings, idf_dict, tfidf_vocab = get_model_files()
+    word_dict, lstm_embedded_questions, tfidf_wtd_ques_vec_embeddings, idf_dict, tfidf_vocab = get_model_files()
     
     #convert query words to vectors if word is present in both model vocabulary and tf-idf vectorizer vocabulary 
     query_vector = np.array([word_dict[w] for w in query.split() if w in word_dict and w in tfidf_vocab])
