@@ -64,7 +64,7 @@ def GetSimilarQuestions(query, no_sim_ques):
 
 
 st.title('Stack Overflow Search Engine')
-st.markdown('Currenty working for limited Questions related to Javascript, java and c# only')
+st.markdown('Currenty working for limited Questions related to Javascript, Java and C# only')
 st.header('Enter your query')
 query = st.text_input('Search Query')
 #st.button('Search', key='srchBtn')
