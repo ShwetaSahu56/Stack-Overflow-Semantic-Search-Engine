@@ -75,7 +75,7 @@ pd.set_option('display.max_colwidth', -1)
 # show data
 if st.button('Search'):
     result = GetSimilarQuestions(query, 10)
-    st.write(result.to_html(index = False, escape = False, render_linksbool = True), unsafe_allow_html = True)
+    st.write(result.to_html(index = False, escape = False, render_links = True), unsafe_allow_html = True)
     #st.dataframe(result)
 
 
