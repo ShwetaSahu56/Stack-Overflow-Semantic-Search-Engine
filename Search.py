@@ -65,6 +65,8 @@ def GetSimilarQuestions(query, no_sim_ques):
     query_tf_idf_vec = np.sum(query_vector*query_tf_idf[:,None], axis=0)
     if(np.sum(query_tf_idf)!=0):
         query_tfidf_wtd_vec = query_tf_idf_vec/np.sum(query_tf_idf)
+    else:
+        query_tfidf_wtd_vec = query_tf_idf_vec
   
     #get cosine similiarity value of each question w.r.t. query string
     cos_sim = pd.Series(cosine_similarity(query_tfidf_wtd_vec.reshape(1, -1), tfidf_wtd_ques_vec_embeddings)[0])
