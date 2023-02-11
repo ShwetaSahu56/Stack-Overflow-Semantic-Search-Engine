@@ -66,8 +66,8 @@ def GetSimilarQuestions(query, no_sim_ques):
     sim_ques_id_title =  lstm_embedded_questions.iloc[sim_questions.index][['Id', 'Title']]
     sim_ques_id_title['Similar Questions'] = sim_ques_id_title.apply(lambda x: make_clickable(x['Id'], x['Title']), axis=1)
     sim_ques_id_title['Cosine Similarity Score'] = sim_questions.values
-    #df = sim_ques_id_title
-    return sim_ques_id_title
+    df = sim_ques_id_title[['Similar Questions', 'Cosine Similarity Score']]
+    return df
 
 
 st.title('Stack Overflow Search Engine')
