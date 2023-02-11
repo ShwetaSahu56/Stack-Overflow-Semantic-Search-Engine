@@ -25,7 +25,7 @@ def GetSimilarQuestions(query, no_sim_ques):
     ''' This function finds k-most similar questions to the searched query based on their cosine similarity values'''
     
     #decontractions
-    #query = query.lower()
+    query = query.lower()
     query = query.replace("won't", "will not").replace("can\'t", "can not").replace("n\'t", " not").replace("\'re", " are").replace("\'s", " is").replace("\'d", " would").replace("\'ll", " will").replace("\'t", " not").replace("\'ve", " have").replace("\'m", " am")
 
     query=re.sub(r'[^A-Za-z0-9#+]+',' ',query)
