@@ -62,11 +62,12 @@ def GetSimilarQuestions(query, no_sim_ques):
     cos_sim = pd.Series(cosine_similarity(query_tfidf_wtd_vec.reshape(1, -1), tfidf_wtd_ques_vec_embeddings)[0])
     
     #get n-larget values i.e. k (no_sim_ques) most similar questions to query string
-    sim_questions = cos_sim.nlargest(no_sim_ques).index
-    sim_ques_id_title =  lstm_embedded_questions.iloc[sim_questions][['Id', 'Title']]
+    sim_questions = cos_sim.nlargest(no_sim_ques)
+    sim_ques_id_title =  lstm_embedded_questions.iloc[sim_questions.index][['Id', 'Title']]
     sim_ques_id_title['Similar Questions'] = sim_ques_id_title.apply(lambda x: make_clickable(x['Id'], x['Title']), axis=1)
-    df = sim_ques_id_title[['Similar Questions']]
-    return df
+    sim_ques_id_title['Cosine Similarity Score'] = sim_questions.values
+    #df = sim_ques_id_title
+    return sim_ques_id_title
 
 
 st.title('Stack Overflow Search Engine')
